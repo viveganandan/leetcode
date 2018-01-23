@@ -12,6 +12,7 @@ class Solution(object):
         :rtype: List[TreeNode]
         """
         def helper(beg, end):
+            # Generate trees, by combining left and right sub trees, with i as the root
             if beg > end:
                 return [None]
             trees = []
