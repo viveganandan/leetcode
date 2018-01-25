@@ -6,24 +6,21 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        def push_n(stack, n):
-            # * and / take precedence, calculate this expression first
-            if stack and (stack[-1] == '*' or stack[-1] == '/'):
+        def pushn(stack, op, n):
+            n = int(n)
+            # Use rank to determine if previous equation can be evaluated
+            while len(stack) > 1 and rank[op] <= rank[stack[-1]]:
                 n = ops[stack.pop()](stack.pop(), n)
-            stack += [n]
+            stack += [n, op]
         if s:
             stack = []
-            ops = {'+':operator.add, '-':operator.sub,
-                '*':operator.mul, '/':operator.div}
+            rank = {'+':0, '-':0, '*':1, '/':1, '':-1}
+            ops = {'+':operator.add, '-':operator.sub, '*':operator.mul, '/':operator.div}
             j = 0
             for i in range(len(s)):
                 if s[i] in ops:
-                    push_n(stack, int(s[j : i]))
-                    stack += [s[i]]
+                    pushn(stack, s[i], s[j : i])
                     j = i + 1
-            push_n(stack, int(s[j : ]))
-            # For the rest of the stack, calculate top down (left to right)
-            for i in range(0, len(stack) - 1, 2):
-                stack[i + 2] = ops[stack[i + 1]](stack[i], stack[i + 2])
-            return stack[-1]
+            pushn(stack, '', s[j : ])
+            return stack[0]
         return 0
