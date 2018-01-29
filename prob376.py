@@ -13,6 +13,7 @@ class Solution(object):
             if i < len(nums):
                 up = nums[i] > nums[0]
                 for i in range(i + 1, len(nums)):
+                    # If cur num is same as previous num, or there is no wiggle, discard the previous
                     if nums[i] == nums[i - 1] or up == (nums[i] > nums[i - 1]):
                         maxlen -= 1
                     else:
