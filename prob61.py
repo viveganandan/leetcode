@@ -19,7 +19,7 @@ class Solution(object):
         while tail.next:
             n += 1
             tail = tail.next
-        # k should be less than tail
+        # k should be less than n
         k %= n
         if k > 0:
             # head will always be after tail
